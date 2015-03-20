@@ -22,7 +22,7 @@ void ofxGenSoundOsc::setup(int samplerate, int buffersize) {
     
 }
 
-float ofxGenSoundOsc::setOscillatorType(oscType waveformType) {
+double ofxGenSoundOsc::setOscillatorType(oscType waveformType) {
  
 
     switch (waveformType) {
@@ -94,28 +94,28 @@ float ofxGenSoundOsc::setOscillatorType(oscType waveformType) {
     
 }
 
-void ofxGenSoundOsc::setFrequency(float freq) {
+void ofxGenSoundOsc::setFrequency(double freq) {
     
     _frequency = freq;
 }
 
-void ofxGenSoundOsc::setAmp(float amount) {
+void ofxGenSoundOsc::setAmp(double amount) {
     
     
 }
 
-void ofxGenSoundOsc::setPhase(float phaseAmount) {
+void ofxGenSoundOsc::setPhase(double phaseAmount) {
     
     _phase = phaseAmount;
 }
 
-void ofxGenSoundOsc::addSignal(float signal) {
+void ofxGenSoundOsc::addSignal(double signal) {
     
     return signal;
     
 }
 
-void ofxGenSoundOsc::multiSignal(float signal) {
+void ofxGenSoundOsc::multiSignal(double signal) {
     
     
 }

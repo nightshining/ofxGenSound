@@ -19,7 +19,7 @@ float ofxGenSoundFilter::addFilter(filterType filter, float input) {
     
     switch (filter) {
         case OF_FILTER_LP:
-            output = outputs[0] + _cutoff * (input-outputs[0]);
+            output = outputs[0] + _cutoff * (input - outputs[0]);
             outputs[0] = output;
             return output;
             break;

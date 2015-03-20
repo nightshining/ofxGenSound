@@ -15,4 +15,5 @@ private:
     
     float volume;
     float attack, release;
+    
 };

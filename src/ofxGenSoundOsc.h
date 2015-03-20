@@ -10,12 +10,12 @@ public:
     ofxGenSoundOsc();
     ~ofxGenSoundOsc();
     void setup(int samplerate, int buffersize);
-    float setOscillatorType(oscType waveformType);
-    void setFrequency(float freq);
-    void setAmp(float amount);
-    void setPhase(float phaseAmount);
-    void addSignal(float signal);
-    void multiSignal(float signal);
+    double setOscillatorType(oscType waveformType);
+    void setFrequency(double freq);
+    void setAmp(double amount);
+    void setPhase(double phaseAmount);
+    void addSignal(double signal);
+    void multiSignal(double signal);
    
 protected:
     int _samplerate;
@@ -23,7 +23,7 @@ protected:
 private:
     
     int _buffersize;
-    float _frequency, _phase;
-    float _sine, _tri, _noise, _saw, _square, _phasor;
+    double _frequency, _phase;
+    double _sine, _tri, _noise, _saw, _square, _phasor;
     
 };

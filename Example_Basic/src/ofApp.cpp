@@ -4,6 +4,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    //// WARNING: ALWAYS SET "TRUE" TO CLAMP WHEN WORKING WITH AUDIO AND CAREFUL WEARING HEADPHONES OTHERWISE YOU CAN DAMAGE YOUR EARS ////
+
+    
     ofBackground(75);
     
     // 2 output channels,
@@ -21,6 +24,9 @@ void ofApp::setup(){
     
     pan = 1.0;
     
+    // Set up one oscillator but passing in sample rate and buffersize //
+    // Set intial oscillator frequency //
+    // Set envelope parameters //
     
     oscillator.setup(soundStream.getSampleRate(), soundStream.getBufferSize());
     oscillator.setFrequency(440);
@@ -32,10 +38,17 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    //trigger an envelope
+    
     env.trigger(ofGetKeyPressed());
+    
+    //control frequency
     
     oscillator.setFrequency(ofMap(ofGetMouseX(), 0, ofGetWidth(), 50, 440, true));
     
+    //control filter cutoff
+    
+    filter.setCutoff(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0.0, 1.0, true));
     
 }
 
@@ -50,15 +63,21 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::audioOut(float * output, int bufferSize, int nChannels){
     
+    // This is your left and right speakers //
     
     float leftScale = -1.0;
     float rightScale = 1.0;
     
+    // This runs through the audio buffer at the rate of the audioOut core audio event //
+    
     for (int i = 0; i < bufferSize; i++){
         float waveform = oscillator.setOscillatorType(OF_TRIANGLE_WAVE) * env.addEnvelope();
         
-        audioOutRight[i] = output[ i * nChannels    ] = waveform * leftScale;
-        audioOutLeft[i] = output[ i * nChannels + 1 ] = waveform * rightScale;
+        /// Filter not quite working yet but this is the idea ///
+        
+        audioOutRight[i] = output[ i * nChannels    ] = filter.addFilter(OF_FILTER_LP, waveform) * leftScale;
+        audioOutLeft[i] = output[ i * nChannels + 1 ] = filter.addFilter(OF_FILTER_LP, waveform) * rightScale;
+         
     }
     
     

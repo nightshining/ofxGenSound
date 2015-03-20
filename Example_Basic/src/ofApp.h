@@ -33,12 +33,17 @@ public:
     ofxGenSoundEnvelope env;
     ofxGenSoundDelay delay;
     ofxGenSoundFilter filter;
-    
-    float sine;
-    
+
     
 };
 
 /*
  Example: 
+ 
+ - Press any key to generate a tone.
+ 
+ - Move the mouse left and right to change frequency.
+ 
+ - Move the mouse up and down to change filter.
+ 
  */
