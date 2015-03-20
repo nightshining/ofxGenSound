@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>012AED38-7A62-40A0-A4A5-BBDB616F1FBB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Example_Basic</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7605DAED8D1ABFCC0F55E31B4FA43A2B26E7B636</key>
+		<string>https://github.com/nightshining/ofxGenSound.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Example_Basic/Example_Basic.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7605DAED8D1ABFCC0F55E31B4FA43A2B26E7B636</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/nightshining/ofxGenSound.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7605DAED8D1ABFCC0F55E31B4FA43A2B26E7B636</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7605DAED8D1ABFCC0F55E31B4FA43A2B26E7B636</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxGenSound</string>
+		</dict>
+	</array>
+</dict>
+</plist>
