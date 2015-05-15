@@ -4,14 +4,10 @@
 
 ofxGenSoundDelay::ofxGenSoundDelay() {
     
-    memset( memory, 0, 88200 * sizeof (double) );
-    phase = 0.0;
-    output = 0.0;
-    frequency = 0.0;
-    startphase = 0.0;
-    endphase = 0.0;
-    feedback = 0.0;
-    
+    int defaultSampleRate = 4410;
+    setup(defaultSampleRate);
+    feedback = 0.5f;
+    mix = 0.5f;
 }
 
 ofxGenSoundDelay::~ofxGenSoundDelay() {
@@ -19,20 +15,27 @@ ofxGenSoundDelay::~ofxGenSoundDelay() {
     
 }
 
-double ofxGenSoundDelay::addDelay( double input, int size )  {
-    
-    if ( phase >= size ) {
-        phase = 0;
-    }
-    output = memory[phase];
-    memory[phase] = ( memory[phase] * feedback) + (input * feedback) * 0.5;
-    phase += 1;
-    return output;
+void ofxGenSoundDelay::setup(int sampleRate) {
+    buffer.resize(sampleRate);
+    buffer.assign(sampleRate, 0);
+    pos = 0;
     
 }
 
-void ofxGenSoundDelay::setDelayFeedback(double amount) {
-    
-    feedback = amount;
-    
+
+void ofxGenSoundDelay::setMix(float amt) {
+    mix = amt;
 }
+
+    
+void ofxGenSoundDelay::setFeedback(float feedbackAmt) {
+    feedback = feedbackAmt;
+}
+
+float ofxGenSoundDelay::processSignal(float input) {
+    pos++;
+    pos %= buffer.size();
+    float out = buffer[pos];
+    buffer[pos] = feedback * buffer[pos] + input;
+    return input + (out - input) * mix;
+};

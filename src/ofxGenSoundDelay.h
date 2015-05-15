@@ -9,21 +9,20 @@ public:
 
     ofxGenSoundDelay();
     ~ofxGenSoundDelay();
-   
-    double addDelay(double input, int size);
-    void setDelayFeedback(double amount);
-    void setDelayTime(double amount);
-    
+    void setup(int sampleRate);
+    void setMix(float amt);
+    void setFeedback(float feedbackAmt);
+    float processSignal(float input);
+
 private:
-    double frequency;
-    double feedback;
-    int phase;
-    double startphase;
-    double endphase;
-    double output;
-    double memory[88200];
+  
+    vector<float> buffer;
+    int pos;
     
-
-
+    float feedback;
+    float mix;
 };
+
+
+
 

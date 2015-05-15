@@ -8,6 +8,7 @@ ofxGenSoundFilter::ofxGenSoundFilter() {
     _cutoff = 0.0;
     outputs[0] = 0.0;
     outputs[1] = 0.0;
+    
 }
 
 ofxGenSoundFilter::~ofxGenSoundFilter() {

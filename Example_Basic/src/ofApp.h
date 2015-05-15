@@ -28,6 +28,7 @@ public:
     vector <float> audioOutRight;
     float pan;
     void drawWaveform(ofVec2f& position);
+
     
     ofxGenSoundOsc oscillator;
     ofxGenSoundEnvelope env;

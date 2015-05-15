@@ -31,7 +31,9 @@ void ofApp::setup(){
     oscillator.setup(soundStream.getSampleRate(), soundStream.getBufferSize());
     oscillator.setFrequency(440);
     
-    env.set(0.005, 0.07); //these are both 0.0 - 1.0 anything above is dangerous
+    env.set(0.1, 0.07); //these are both 0.0 - 1.0 anything above is dangerous
+    //attack 0.0 - 1.0
+    //release 0.0 - 1.0
     
 }
 
@@ -48,7 +50,10 @@ void ofApp::update(){
     
     //control filter cutoff
     
-    filter.setCutoff(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0.0, 1.0, true));
+    //filter.setCutoff(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0.0, 1.0, true));
+    
+    delay.setFeedback(0.90);
+    delay.setMix(0.50);
     
 }
 
@@ -71,15 +76,22 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels){
     // This runs through the audio buffer at the rate of the audioOut core audio event //
     
     for (int i = 0; i < bufferSize; i++){
-        float waveform = oscillator.setOscillatorType(OF_TRIANGLE_WAVE) * env.addEnvelope();
         
+        // Signal Chain //
+        float waveform = oscillator.setOscillatorType(OF_TRIANGLE_WAVE) * env.addEnvelope();
+        float delayOutputL = waveform + delay.processSignal(waveform) * leftScale;
+        float delayOutputR = waveform + delay.processSignal(waveform) * rightScale;
+
         /// Filter not quite working yet but this is the idea ///
         
-        audioOutRight[i] = output[ i * nChannels    ] = filter.addFilter(OF_FILTER_LP, waveform) * leftScale;
-        audioOutLeft[i] = output[ i * nChannels + 1 ] = filter.addFilter(OF_FILTER_LP, waveform) * rightScale;
-         
+       // audioOutRight[i] = output[ i * nChannels    ] = filter.addFilter(OF_FILTER_LP, waveform) * leftScale;
+       // audioOutLeft[i] = output[ i * nChannels + 1 ] = filter.addFilter(OF_FILTER_LP, waveform) * rightScale;
+        
+        // Output Sound //
+        audioOutRight[i] = output[ i * nChannels    ] = delayOutputL;
+        audioOutLeft[i] = output[ i * nChannels + 1 ] = delayOutputR;
+        
     }
-    
     
 }
 
