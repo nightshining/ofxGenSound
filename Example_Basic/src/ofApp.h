@@ -35,7 +35,6 @@ public:
     ofxGenSoundDelay delay;
     ofxGenSoundFilter filter;
 
-    
 };
 
 /*
