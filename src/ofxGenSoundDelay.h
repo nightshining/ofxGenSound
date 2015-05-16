@@ -12,7 +12,7 @@ public:
     void setup(int sampleRate);
     void setMix(float amt);
     void setFeedback(float feedbackAmt);
-    float processSignal(float input);
+    float addDelay(float input);
 
 private:
   

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGenSound.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
     
@@ -29,12 +30,16 @@ public:
     float pan;
     void drawWaveform(ofVec2f& position);
 
+    //ofxGenSound
     
-    ofxGenSoundOsc oscillator;
+    ofxGenSoundOsc triWave, sineWave;
     ofxGenSoundEnvelope env;
     ofxGenSoundDelay delay;
     ofxGenSoundFilter filter;
 
+    //GUI
+    ofxPanel gui;
+    ofxFloatSlider freq1, freq2, filterCutoff, delayFeedback;
 };
 
 /*

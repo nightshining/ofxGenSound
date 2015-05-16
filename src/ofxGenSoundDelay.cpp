@@ -32,7 +32,7 @@ void ofxGenSoundDelay::setFeedback(float feedbackAmt) {
     feedback = feedbackAmt;
 }
 
-float ofxGenSoundDelay::processSignal(float input) {
+float ofxGenSoundDelay::addDelay(float input) {
     pos++;
     pos %= buffer.size();
     float out = buffer[pos];

@@ -4,10 +4,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    //// WARNING: ALWAYS SET "TRUE" TO CLAMP WHEN WORKING WITH AUDIO AND CAREFUL WEARING HEADPHONES OTHERWISE YOU CAN DAMAGE YOUR EARS ////
+    //// WARNING: ALWAYS SET OFMAP TO "TRUE" TO CLAMP WHEN WORKING WITH AUDIO AND CAREFUL WEARING HEADPHONES OTHERWISE YOU CAN DAMAGE YOUR EARS ////
 
     
-    ofBackground(75);
+    ofBackground(50);
     
     // 2 output channels,
     // 0 input channels
@@ -28,13 +28,28 @@ void ofApp::setup(){
     // Set intial oscillator frequency //
     // Set envelope parameters //
     
-    oscillator.setup(soundStream.getSampleRate(), soundStream.getBufferSize());
-    oscillator.setFrequency(440);
+    triWave.setup(soundStream.getSampleRate(), soundStream.getBufferSize());
+    triWave.setFrequency(440);
+    
+    sineWave.setup(soundStream.getSampleRate(), soundStream.getBufferSize());
+    sineWave.setFrequency(220);
+    
     
     env.set(0.9, 0.07); //these are both 0.0 - 1.0 anything above is dangerous
     //attack 0.0 - 1.0
     //release 0.0 - 1.0
     
+    
+    //setup ofxGui
+    gui.setup("ofxGenSound");
+    gui.add(freq1.setup("Triangle Wave Freq", 440, 220, 600));
+    gui.add(freq2.setup("Sine Wave Freq", 220, 220, 600));
+    gui.add(filterCutoff.setup("Filter Cutoff", 0.5, 0.0, 0.5));
+    gui.add(delayFeedback.setup("Delay Feedback", 0.8, 0.0, 0.9));
+
+    
+    
+    ofSetWindowTitle("ofxGenSound Example");
 }
 
 //--------------------------------------------------------------
@@ -46,14 +61,16 @@ void ofApp::update(){
     
     //control frequency
     
-    oscillator.setFrequency(ofMap(ofGetMouseX(), 0, ofGetWidth(), 50, 440, true));
+    triWave.setFrequency(freq1);
+    sineWave.setFrequency(freq2);
+
     
     //control filter cutoff
     
-    filter.setCutoff(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0.0, 0.5, true));
+    filter.setCutoff(filterCutoff);
     
-    delay.setFeedback(0.50);
-    delay.setMix(0.50);
+    delay.setFeedback(delayFeedback);
+    delay.setMix(0.5);
     
 }
 
@@ -62,7 +79,8 @@ void ofApp::draw(){
     
     ofVec2f vec = ofVec2f(0, ofGetHeight() * .5);
     drawWaveform(vec);
-    
+    gui.draw();
+    ofDrawBitmapString("Press Any Key to Generate a Tone", ofGetWidth() * .10, ofGetHeight() * .25);
 }
 
 //--------------------------------------------------------------
@@ -78,11 +96,11 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels){
     for (int i = 0; i < bufferSize; i++){
         
         // Signal Chain //
-        float waveformOut = oscillator.setOscillatorType(OF_SAWTOOTH_WAVE) * env.addEnvelope();
+        float waveOut = (triWave.setOscillatorType(OF_TRIANGLE_WAVE) * sineWave.setOscillatorType(OF_SINE_WAVE)) * env.addEnvelope();
         
-        float filterOut = filter.addFilter(OF_FILTER_LP, waveformOut);
+        float filterOut = filter.addFilter(OF_FILTER_LP, waveOut);
         
-        float delayOut = delay.processSignal(filterOut);
+        float delayOut = delay.addDelay(filterOut);
         
         
         // Output Sound //
