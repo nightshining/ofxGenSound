@@ -96,7 +96,7 @@ void ofApp::audioOut(float * output, int bufferSize, int nChannels){
     for (int i = 0; i < bufferSize; i++){
         
         // Signal Chain //
-        float waveOut = (triWave.setOscillatorType(OF_TRIANGLE_WAVE) * sineWave.setOscillatorType(OF_SINE_WAVE)) * env.addEnvelope();
+        float waveOut = (triWave.setOscillatorType(OF_TRIANGLE_WAVE) + sineWave.setOscillatorType(OF_SINE_WAVE)) * env.addEnvelope();
         
         float filterOut = filter.addFilter(OF_FILTER_LP, waveOut);
         
